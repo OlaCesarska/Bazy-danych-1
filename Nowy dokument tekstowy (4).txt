@@ -1,0 +1,420 @@
+login as: cesarskaa
+cesarskaa@213.184.8.36's password:
+Access denied
+cesarskaa@213.184.8.36's password:
+Linux bad2 4.10.17-1-pve #1 SMP PVE 4.10.17-16 (Tue, 11 Jul 2017 09:55:44 +0200)                                                                              x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Tue Nov 16 17:14:20 2021 from 31.60.230.187
+cesarskaa@bad2:~$ mysql -u cesarskaa -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 1193
+Server version: 8.0.22 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databses;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that                                                                              corresponds to your MySQL server version for the right syntax to use near 'datab                                                                             ses' at line 1
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| cesarskaa          |
+| information_schema |
++--------------------+
+2 rows in set (0.00 sec)
+
+mysql> use cesarskaa;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables
+    -> ;
++---------------------+
+| Tables_in_cesarskaa |
++---------------------+
+| izba                |
+| postac              |
+| pracownik           |
+| projekt             |
+| przetwory           |
+| statek              |
+| walizka             |
++---------------------+
+7 rows in set (0.00 sec)
+
+mysql> select *from postac;
++------------+----------+---------+------------+------+---------+--------------+
+| id_postaci | nazwa    | rodzaj  | data       | wiek | funkcja | nazwa_statku |
++------------+----------+---------+------------+------+---------+--------------+
+|          1 | Bjorn    | wiking  | 1989-01-01 |   50 | kapitan | NULL         |
+|          2 | Drozd    | ptak    | 2020-10-27 |    1 | NULL    | NULL         |
+|          3 | Tesciowa | kobieta | 1933-03-23 |   88 | NULL    | NULL         |
+|          4 | Marcin   | wiking  | 2000-03-01 |   21 | NULL    | NULL         |
+|          5 | Karol    | wiking  | 1999-04-06 |   22 | NULL    | NULL         |
+|          6 | Marcin   | wiking  | 1998-05-09 |   23 | NULL    | NULL         |
+|          7 | Pawel    | wiking  | 1997-06-10 |   24 | NULL    | NULL         |
+|          8 | Eustachy | wiking  | 1996-02-01 |   25 | NULL    | NULL         |
++------------+----------+---------+------------+------+---------+--------------+
+8 rows in set (0.00 sec)
+
+mysql> UPDATE postac SET nazwa_statku='KOT' WHERE id_postaci='2', '4', '5', '6',                                                                              '7', '8';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that                                                                              corresponds to your MySQL server version for the right syntax to use near ', '4'                                                                             , '5', '6', '7', '8'' at line 1
+mysql> UPDATE postac SET nazwa_statku='KOT' WHERE id_postaci='2';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE postac SET nazwa_statku='KOT' WHERE id_postaci=4';
+    '> ;
+    '> UPDATE postac SET nazwa_statku='KOT' WHERE id_postaci=4';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that                                                                              corresponds to your MySQL server version for the right syntax to use near '';
+;
+UPDATE postac SET nazwa_statku='KOT' WHERE id_postaci=4'' at line 1
+mysql> UPDATE postac SET nazwa_statku='KOT' WHERE id_postaci='4';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE postac SET nazwa_statku='KOT' WHERE id_postaci='5';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE postac SET nazwa_statku='KOT' WHERE id_postaci='6';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE postac SET nazwa_statku='KOT' WHERE id_postaci='7';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE postac SET nazwa_statku='KOT' WHERE id_postaci='8';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select *from postac;
++------------+----------+---------+------------+------+---------+--------------+
+| id_postaci | nazwa    | rodzaj  | data       | wiek | funkcja | nazwa_statku |
++------------+----------+---------+------------+------+---------+--------------+
+|          1 | Bjorn    | wiking  | 1989-01-01 |   50 | kapitan | NULL         |
+|          2 | Drozd    | ptak    | 2020-10-27 |    1 | NULL    | KOT          |
+|          3 | Tesciowa | kobieta | 1933-03-23 |   88 | NULL    | NULL         |
+|          4 | Marcin   | wiking  | 2000-03-01 |   21 | NULL    | KOT          |
+|          5 | Karol    | wiking  | 1999-04-06 |   22 | NULL    | KOT          |
+|          6 | Marcin   | wiking  | 1998-05-09 |   23 | NULL    | KOT          |
+|          7 | Pawel    | wiking  | 1997-06-10 |   24 | NULL    | KOT          |
+|          8 | Eustachy | wiking  | 1996-02-01 |   25 | NULL    | KOT          |
++------------+----------+---------+------------+------+---------+--------------+
+8 rows in set (0.00 sec)
+
+mysql> select *from izba;
++---------------+------------+--------+------------+--------+
+| adres_budynku | nazwa_izby | metraz | id_postaci | kolor  |
++---------------+------------+--------+------------+--------+
+| koralowa_20   | spizarnia  |      8 |          3 | czarny |
++---------------+------------+--------+------------+--------+
+1 row in set (0.00 sec)
+
+mysql> desc izba;
++---------------+-------------+------+-----+-------------------+----------------                                                                             ---+
+| Field         | Type        | Null | Key | Default           | Extra                                                                                          |
++---------------+-------------+------+-----+-------------------+----------------                                                                             ---+
+| adres_budynku | varchar(40) | NO   | PRI | NULL              |                                                                                                |
+| nazwa_izby    | varchar(40) | NO   | PRI | NULL              |                                                                                                |
+| metraz        | int         | NO   |     | NULL              |                                                                                                |
+| id_postaci    | int         | YES  | MUL | NULL              |                                                                                                |
+| kolor         | varchar(40) | YES  |     | _latin1\'czarny\' | DEFAULT_GENERAT                                                                             ED |
++---------------+-------------+------+-----+-------------------+----------------                                                                             ---+
+5 rows in set (0.01 sec)
+
+mysql> DELET FROM izba WHERE nazwa_izby='spizarnia';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that                                                                              corresponds to your MySQL server version for the right syntax to use near 'DELET                                                                              FROM izba WHERE nazwa_izby='spizarnia'' at line 1
+mysql> DELETE FROM izba WHERE nazwa_izby='spizarnia';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select *from izba;
+Empty set (0.01 sec)
+
+mysql> desc izba;
++---------------+-------------+------+-----+-------------------+----------------                                                                             ---+
+| Field         | Type        | Null | Key | Default           | Extra                                                                                          |
++---------------+-------------+------+-----+-------------------+----------------                                                                             ---+
+| adres_budynku | varchar(40) | NO   | PRI | NULL              |                                                                                                |
+| nazwa_izby    | varchar(40) | NO   | PRI | NULL              |                                                                                                |
+| metraz        | int         | NO   |     | NULL              |                                                                                                |
+| id_postaci    | int         | YES  | MUL | NULL              |                                                                                                |
+| kolor         | varchar(40) | YES  |     | _latin1\'czarny\' | DEFAULT_GENERAT                                                                             ED |
++---------------+-------------+------+-----+-------------------+----------------                                                                             ---+
+5 rows in set (0.00 sec)
+
+mysql> DELETE FROM izba;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select *from postac;
++------------+----------+---------+------------+------+---------+--------------+
+| id_postaci | nazwa    | rodzaj  | data       | wiek | funkcja | nazwa_statku |
++------------+----------+---------+------------+------+---------+--------------+
+|          1 | Bjorn    | wiking  | 1989-01-01 |   50 | kapitan | NULL         |
+|          2 | Drozd    | ptak    | 2020-10-27 |    1 | NULL    | KOT          |
+|          3 | Tesciowa | kobieta | 1933-03-23 |   88 | NULL    | NULL         |
+|          4 | Marcin   | wiking  | 2000-03-01 |   21 | NULL    | KOT          |
+|          5 | Karol    | wiking  | 1999-04-06 |   22 | NULL    | KOT          |
+|          6 | Marcin   | wiking  | 1998-05-09 |   23 | NULL    | KOT          |
+|          7 | Pawel    | wiking  | 1997-06-10 |   24 | NULL    | KOT          |
+|          8 | Eustachy | wiking  | 1996-02-01 |   25 | NULL    | KOT          |
++------------+----------+---------+------------+------+---------+--------------+
+8 rows in set (0.00 sec)
+
+mysql> DELETE FROM postac WHERE id_postaci='8';
+Query OK, 1 row affected (0.00 sec)
+
+mysql> DELETE FROM postac WHERE id_postaci='7';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select *from postac;
++------------+----------+---------+------------+------+---------+--------------+
+| id_postaci | nazwa    | rodzaj  | data       | wiek | funkcja | nazwa_statku |
++------------+----------+---------+------------+------+---------+--------------+
+|          1 | Bjorn    | wiking  | 1989-01-01 |   50 | kapitan | NULL         |
+|          2 | Drozd    | ptak    | 2020-10-27 |    1 | NULL    | KOT          |
+|          3 | Tesciowa | kobieta | 1933-03-23 |   88 | NULL    | NULL         |
+|          4 | Marcin   | wiking  | 2000-03-01 |   21 | NULL    | KOT          |
+|          5 | Karol    | wiking  | 1999-04-06 |   22 | NULL    | KOT          |
+|          6 | Marcin   | wiking  | 1998-05-09 |   23 | NULL    | KOT          |
++------------+----------+---------+------------+------+---------+--------------+
+6 rows in set (0.00 sec)
+
+mysql> ALTER TABLE postac DROP PRIMARY KEY;
+ERROR 1075 (42000): Incorrect table definition; there can be only one auto column and it must be defined as a key
+mysql> DESC postac;
++--------------+---------------------------------+------+-----+---------+----------------+
+| Field        | Type                            | Null | Key | Default | Extra          |
++--------------+---------------------------------+------+-----+---------+----------------+
+| id_postaci   | int                             | NO   | PRI | NULL    | auto_increment |
+| nazwa        | varchar(40)                     | NO   |     | NULL    |                |
+| rodzaj       | enum('wiking','ptak','kobieta') | YES  |     | NULL    |                |
+| data         | date                            | NO   |     | NULL    |                |
+| wiek         | int                             | NO   |     | NULL    |                |
+| funkcja      | varchar(40)                     | YES  |     | NULL    |                |
+| nazwa_statku | varchar(40)                     | YES  | MUL | NULL    |                |
++--------------+---------------------------------+------+-----+---------+----------------+
+7 rows in set (0.01 sec)
+
+mysql> desc statek;
++----------------+-----------------------------------------+------+-----+---------+-------+
+| Field          | Type                                    | Null | Key | Default | Extra |
++----------------+-----------------------------------------+------+-----+---------+-------+
+| nazwa_statku   | varchar(40)                             | NO   | PRI | NULL    |       |
+| rodzaj_statku  | enum('handlowy','wojenny','pasazerski') | YES  |     | NULL    |       |
+| data_wodowania | date                                    | NO   |     | NULL    |       |
+| max_ladownosc  | int                                     | NO   |     | NULL    |       |
++----------------+-----------------------------------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> desc walizka;
++------------+-----------------------------------+------+-----+---------+----------------+
+| Field      | Type                              | Null | Key | Default | Extra          |
++------------+-----------------------------------+------+-----+---------+----------------+
+| id_walizki | int                               | NO   | PRI | NULL    | auto_increment |
+| pojemnosc  | int                               | NO   |     | NULL    |                |
+| kolor      | enum('rozowy','czerwony','zolty') | YES  |     | NULL    |                |
+| id_postaci | int                               | YES  | MUL | NULL    |                |
++------------+-----------------------------------+------+-----+---------+----------------+
+4 rows in set (0.01 sec)
+
+mysql> ALTER TABLE walizka DROP FOREIGN KEY id_postaci;
+ERROR 1091 (42000): Can't DROP 'id_postaci'; check that column/key exists
+mysql> ALTER TABLE walizka DROP CONSTRAINT id_postaci;
+ERROR 3940 (HY000): Constraint 'id_postaci' does not exist.
+mysql> ALTER TABLE walizka DROP FOREIGN KEY id_postaci;
+ERROR 1091 (42000): Can't DROP 'id_postaci'; check that column/key exists
+mysql> SELECT *from walizka;
++------------+-----------+--------+------------+
+| id_walizki | pojemnosc | kolor  | id_postaci |
++------------+-----------+--------+------------+
+|          1 |         1 | rozowy |          1 |
+|          2 |         1 | rozowy |          3 |
++------------+-----------+--------+------------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE walizka DROP COLUMN id_postaci;
+ERROR 1828 (HY000): Cannot drop column 'id_postaci': needed in a foreign key constraint 'walizka_ibfk_1'
+mysql> ALTER TABLE walizka DROP FOREIGN KEY 'id_postaci';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''id_postaci'' at line 1
+mysql> alter table walizka drop foreign key id_postaci;
+ERROR 1091 (42000): Can't DROP 'id_postaci'; check that column/key exists
+mysql> ALTER TABLE walizka DROP FOREIGN KEY walizka_ibfk_1;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT *from walizka;
++------------+-----------+--------+------------+
+| id_walizki | pojemnosc | kolor  | id_postaci |
++------------+-----------+--------+------------+
+|          1 |         1 | rozowy |          1 |
+|          2 |         1 | rozowy |          3 |
++------------+-----------+--------+------------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE walizka DROP FOREIGN KEY id_postaci;
+ERROR 1091 (42000): Can't DROP 'id_postaci'; check that column/key exists
+mysql> ALTER TABLE walizka DROP COLUMN id_postaci;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT *from walizka;
++------------+-----------+--------+
+| id_walizki | pojemnosc | kolor  |
++------------+-----------+--------+
+|          1 |         1 | rozowy |
+|          2 |         1 | rozowy |
++------------+-----------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select *from przetwory;
+Empty set (0.00 sec)
+
+mysql> desc przetwory;
++---------------+--------------+------+-----+------------------+-------+
+| Field         | Type         | Null | Key | Default          | Extra |
++---------------+--------------+------+-----+------------------+-------+
+| id_przetworu  | int          | NO   | PRI | NULL             |       |
+| rok_produkcji | year         | YES  |     | 1964             |       |
+| id_wykonawcy  | int          | YES  | MUL | NULL             |       |
+| zawartosc     | varchar(200) | YES  |     | NULL             |       |
+| dodatek       | varchar(200) | YES  |     | papryczka_chilli |       |
+| id_konsumenta | int          | YES  | MUL | NULL             |       |
++---------------+--------------+------+-----+------------------+-------+
+6 rows in set (0.01 sec)
+
+mysql> select *from przetwory;
+Empty set (0.00 sec)
+
+mysql> ALTER TABLE przetwory DROP COLUMN id_konsumenta;
+ERROR 1828 (HY000): Cannot drop column 'id_konsumenta': needed in a foreign key constraint 'przetwory_ibfk_2'
+mysql> ALTER TABLE przetwory DROP FOREIGN KEY przetwory_ibfk_2;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE przetwory DROP COLUMN id_konsumenta;
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE przetwory DROP COLUMN id_wykonawcy;
+ERROR 1828 (HY000): Cannot drop column 'id_wykonawcy': needed in a foreign key constraint 'przetwory_ibfk_1'
+mysql>
+mysql> ALTER TABLE przetwory DROP FOREIGN KEY przetwory_ibfk_1;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE przetwory DROP COLUMN id_wykonawcy;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc preztwory;
+ERROR 1146 (42S02): Table 'cesarskaa.preztwory' doesn't exist
+mysql> desc przetwory;
++---------------+--------------+------+-----+------------------+-------+
+| Field         | Type         | Null | Key | Default          | Extra |
++---------------+--------------+------+-----+------------------+-------+
+| id_przetworu  | int          | NO   | PRI | NULL             |       |
+| rok_produkcji | year         | YES  |     | 1964             |       |
+| zawartosc     | varchar(200) | YES  |     | NULL             |       |
+| dodatek       | varchar(200) | YES  |     | papryczka_chilli |       |
++---------------+--------------+------+-----+------------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> desc postac;
++--------------+---------------------------------+------+-----+---------+----------------+
+| Field        | Type                            | Null | Key | Default | Extra          |
++--------------+---------------------------------+------+-----+---------+----------------+
+| id_postaci   | int                             | NO   | PRI | NULL    | auto_increment |
+| nazwa        | varchar(40)                     | NO   |     | NULL    |                |
+| rodzaj       | enum('wiking','ptak','kobieta') | YES  |     | NULL    |                |
+| data         | date                            | NO   |     | NULL    |                |
+| wiek         | int                             | NO   |     | NULL    |                |
+| funkcja      | varchar(40)                     | YES  |     | NULL    |                |
+| nazwa_statku | varchar(40)                     | YES  | MUL | NULL    |                |
++--------------+---------------------------------+------+-----+---------+----------------+
+7 rows in set (0.00 sec)
+
+mysql> ALTER TABLE postac DROP PRIMARY KEY id_postaci;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'id_postaci' at line 1
+mysql> ALTER TABLE postac DROP COLUMN id_postaci;
+ERROR 1829 (HY000): Cannot drop column 'id_postaci': needed in a foreign key constraint 'izba_ibfk_1' of table 'izba'
+mysql> ALTER TABLE izba DROP FOREIGN KEY izba_ibfk_1;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE postac DROP PRIMARY KEY id_postaci;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'id_postaci' at line 1
+mysql> ALTER TABLE postac DROP COLUMN id_postaci;
+Query OK, 6 rows affected (0.10 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> desc postac;
++--------------+---------------------------------+------+-----+---------+-------+
+| Field        | Type                            | Null | Key | Default | Extra |
++--------------+---------------------------------+------+-----+---------+-------+
+| nazwa        | varchar(40)                     | NO   |     | NULL    |       |
+| rodzaj       | enum('wiking','ptak','kobieta') | YES  |     | NULL    |       |
+| data         | date                            | NO   |     | NULL    |       |
+| wiek         | int                             | NO   |     | NULL    |       |
+| funkcja      | varchar(40)                     | YES  |     | NULL    |       |
+| nazwa_statku | varchar(40)                     | YES  | MUL | NULL    |       |
++--------------+---------------------------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> ALTER TABLE postac ADD PRIMARY KEY 'pesel' VARCHAR(11);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''pesel' VARCHAR(11)' at line 1
+mysql> ALTER TABLE postac ADD PRIMARY KEY ('pesel' VARCHAR(11));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''pesel' VARCHAR(11))' at line 1
+mysql> ALTER TABLE postac ADD PRIMARY KEY pesel VARCHAR(11);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'VARCHAR(11)' at line 1
+mysql> ALTER TABLE postac ADD CONSTRAINT pesel PRIMARY KEY VARCHAR(11);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'VARCHAR(11)' at line 1
+mysql> ALTER TABLE postac ADD pesel VARCHAR (11) PRIMARY KEY;
+ERROR 1062 (23000): Duplicate entry '' for key 'postac.PRIMARY'
+mysql> desc postac;
++--------------+---------------------------------+------+-----+---------+-------+
+| Field        | Type                            | Null | Key | Default | Extra |
++--------------+---------------------------------+------+-----+---------+-------+
+| nazwa        | varchar(40)                     | NO   |     | NULL    |       |
+| rodzaj       | enum('wiking','ptak','kobieta') | YES  |     | NULL    |       |
+| data         | date                            | NO   |     | NULL    |       |
+| wiek         | int                             | NO   |     | NULL    |       |
+| funkcja      | varchar(40)                     | YES  |     | NULL    |       |
+| nazwa_statku | varchar(40)                     | YES  | MUL | NULL    |       |
++--------------+---------------------------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> ALTER TABLE postac ADD PRIMARY KEY pesel;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> ALTER TABLE postac ADD PRIMARY KEY 'pesel';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''pesel'' at line 1
+mysql> ALTER TABLE postac ADD PRIMARY KEY (pesel);
+ERROR 1072 (42000): Key column 'pesel' doesn't exist in table
+mysql> ALTER TABLE postac ADD pesel VARCHAR(11);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE postac ADD PRIMARY KEY (pesel);
+ERROR 1138 (22004): Invalid use of NULL value
+mysql> ALTER TABLE postac ADD PRIMARY KEY pesel;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> ALTER TABLE postac ADD CONSTRAINT pesel PRIMARY KEY (pesel);
+ERROR 1138 (22004): Invalid use of NULL value
+mysql> ALTER TABLE postac ADD CONSTRAINT pesel PRIMARY KEY;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql>
