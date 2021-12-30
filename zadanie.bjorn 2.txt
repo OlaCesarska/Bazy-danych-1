@@ -1,0 +1,628 @@
+login as: cesarskaa
+cesarskaa@213.184.8.36's password:
+Access denied
+cesarskaa@213.184.8.36's password:
+Linux bad2 4.10.17-1-pve #1 SMP PVE 4.10.17-16 (Tue, 11 Jul 2017 09:55:44 +0200)                                                                                                                                                              x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Tue Nov 16 17:58:27 2021 from 31.60.230.187
+cesarskaa@bad2:~$ mysql -u cesarskaa -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 1375
+Server version: 8.0.22 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| cesarskaa          |
+| information_schema |
++--------------------+
+2 rows in set (0.01 sec)
+
+mysql> use cesarskaa;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++---------------------+
+| Tables_in_cesarskaa |
++---------------------+
+| izba                |
+| postac              |
+| pracownik           |
+| projekt             |
+| przetwory           |
+| statek              |
+| walizka             |
++---------------------+
+7 rows in set (0.01 sec)
+
+mysql> desc postac;
++--------------+---------------------------------+------+-----+---------+-------                                                                                                                                                             +
+| Field        | Type                            | Null | Key | Default | Extra                                                                                                                                                              |
++--------------+---------------------------------+------+-----+---------+-------                                                                                                                                                             +
+| nazwa        | varchar(40)                     | NO   |     | NULL    |                                                                                                                                                                    |
+| rodzaj       | enum('wiking','ptak','kobieta') | YES  |     | NULL    |                                                                                                                                                                    |
+| data         | date                            | NO   |     | NULL    |                                                                                                                                                                    |
+| wiek         | int                             | NO   |     | NULL    |                                                                                                                                                                    |
+| funkcja      | varchar(40)                     | YES  |     | NULL    |                                                                                                                                                                    |
+| nazwa_statku | varchar(40)                     | YES  | MUL | NULL    |                                                                                                                                                                    |
+| pesel        | varchar(11)                     | YES  |     | NULL    |                                                                                                                                                                    |
++--------------+---------------------------------+------+-----+---------+-------                                                                                                                                                             +
+7 rows in set (0.00 sec)
+
+mysql> ALTER TABLE postac ADD pesel VARCHAR (11) NOT NULL;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> UPDATE postac SET pesel='12345678912' WHERE wiek='50';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE postac SET pesel='98765432109' WHERE wiek='1';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE postac SET pesel='22334455569' WHERE wiek='88';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE postac SET pesel='11223344556' WHERE wiek='21';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE postac SET pesel='01928374658' WHERE wiek='22';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE postac SET pesel='56421895632' WHERE wiek='23';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select *from postac;
++----------+---------+------------+------+---------+--------------+-------------                                                                                                                                                             +
+| nazwa    | rodzaj  | data       | wiek | funkcja | nazwa_statku | pesel                                                                                                                                                                    |
++----------+---------+------------+------+---------+--------------+-------------                                                                                                                                                             +
+| Bjorn    | wiking  | 1989-01-01 |   50 | kapitan | NULL         | 12345678912                                                                                                                                                              |
+| Drozd    | ptak    | 2020-10-27 |    1 | NULL    | KOT          | 98765432109                                                                                                                                                              |
+| Tesciowa | kobieta | 1933-03-23 |   88 | NULL    | NULL         | 22334455569                                                                                                                                                              |
+| Marcin   | wiking  | 2000-03-01 |   21 | NULL    | KOT          | 11223344556                                                                                                                                                              |
+| Karol    | wiking  | 1999-04-06 |   22 | NULL    | KOT          | 01928374658                                                                                                                                                              |
+| Marcin   | wiking  | 1998-05-09 |   23 | NULL    | KOT          | 56421895632                                                                                                                                                              |
++----------+---------+------------+------+---------+--------------+-------------                                                                                                                                                             +
+6 rows in set (0.00 sec)
+                                                                                                                                                            line 1
+mysql> ALTER TABLE postac MODIFY pesel VARCHAR (11) NOT NULL PRIMARY KEY;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+mysql> DESC postac;
++--------------+------------------------------------------+------+-----+--------                                                                                                                                                             -+-------+
+| Field        | Type                                     | Null | Key | Default                                                                                                                                                              | Extra |
++--------------+------------------------------------------+------+-----+--------                                                                                                                                                             -+-------+
+| nazwa        | varchar(40)                              | NO   |     | NULL                                                                                                                                                                 |       |
+| rodzaj       | enum('wiking','ptak','kobieta','syrena') | YES  |     | NULL                                                                                                                                                                 |       |
+| data         | date                                     | NO   |     | NULL                                                                                                                                                                 |       |
+| wiek         | int                                      | NO   |     | NULL                                                                                                                                                                 |       |
+| funkcja      | varchar(40)                              | YES  |     | NULL                                                                                                                                                                 |       |
+| nazwa_statku | varchar(40)                              | YES  | MUL | NULL                                                                                                                                                                 |       |
+| pesel        | varchar(11)                              | NO   | PRI | NULL                                                                                                                                                                 |       |
++--------------+------------------------------------------+------+-----+--------                                                                                                                                                             -+-------+
+7 rows in set (0.01 sec)
+
+mysql> ALTER TABLE postac MODIFY rodzaj ENUM('wiking', 'ptak', 'kobieta', 'syren                                                                                                                                                             a');
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO postac(nazwa, rodzaj, data, wiek, pesel) VALUES ('Gertruda Ni
+eszczera', 'syrena', '2000-04-05', '21', '20087635281')
+    -> ;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select *from postac;
++---------------------+---------+------------+------+---------+--------------+--                                                                                                                                                             -----------+
+| nazwa               | rodzaj  | data       | wiek | funkcja | nazwa_statku | p                                                                                                                                                             esel       |
++---------------------+---------+------------+------+---------+--------------+--                                                                                                                                                             -----------+
+| Karol               | wiking  | 1999-04-06 |   22 | NULL    | KOT          | 0                                                                                                                                                             1928374658 |
+| Marcin              | wiking  | 2000-03-01 |   21 | NULL    | KOT          | 1                                                                                                                                                             1223344556 |
+| Bjorn               | wiking  | 1989-01-01 |   50 | kapitan | NULL         | 1                                                                                                                                                             2345678912 |
+| Gertruda Nieszczera | syrena  | 2000-04-05 |   21 | NULL    | NULL         | 2                                                                                                                                                             0087635281 |
+| Tesciowa            | kobieta | 1933-03-23 |   88 | NULL    | NULL         | 2                                                                                                                                                             2334455569 |
+| Marcin              | wiking  | 1998-05-09 |   23 | NULL    | KOT          | 5                                                                                                                                                             6421895632 |
+| Drozd               | ptak    | 2020-10-27 |    1 | NULL    | KOT          | 9                                                                                                                                                             8765432109 |
++---------------------+---------+------------+------+---------+--------------+--                                                                                                                                                             -----------+
+7 rows in set (0.00 sec)
+
+mysql> select *from statek;
++--------------+---------------+----------------+---------------+
+| nazwa_statku | rodzaj_statku | data_wodowania | max_ladownosc |
++--------------+---------------+----------------+---------------+
+| KOT          | pasazerski    | 2021-11-25     |            65 |
+| PIES         | wojenny       | 2022-04-04     |           100 |
++--------------+---------------+----------------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO statek VALUES ('STATEK_BJORNA', 'pasazerski', '2021-06-05', '                                                                                                                                                             120');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select *from statek;
++---------------+---------------+----------------+---------------+
+| nazwa_statku  | rodzaj_statku | data_wodowania | max_ladownosc |
++---------------+---------------+----------------+---------------+
+| KOT           | pasazerski    | 2021-11-25     |            65 |
+| PIES          | wojenny       | 2022-04-04     |           100 |
+| STATEK_BJORNA | pasazerski    | 2021-06-05     |           120 |
++---------------+---------------+----------------+---------------+
+3 rows in set (0.00 sec)
+
+
+mysql> UPDATE postac SET nazwa_statku='STATEK_BJORNA' WHERE wiek='22';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE postac SET nazwa_statku='STATEK_BJORNA' WHERE wiek='21';
+Query OK, 2 rows affected (0.00 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> UPDATE postac SET nazwa_statku='STATEK_BJORNA' WHERE wiek='88';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE postac SET nazwa_statku='STATEK_BJORNA' WHERE wiek='23';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select *from statek;
++---------------+---------------+----------------+---------------+
+| nazwa_statku  | rodzaj_statku | data_wodowania | max_ladownosc |
++---------------+---------------+----------------+---------------+
+| KOT           | pasazerski    | 2021-11-25     |            65 |
+| PIES          | wojenny       | 2022-04-04     |           100 |
+| STATEK_BJORNA | pasazerski    | 2021-06-05     |           120 |
++---------------+---------------+----------------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> select *from postac;
++---------------------+---------+------------+------+---------+---------------+-                                                                                                                                                             ------------+
+| nazwa               | rodzaj  | data       | wiek | funkcja | nazwa_statku  |                                                                                                                                                              pesel       |
++---------------------+---------+------------+------+---------+---------------+-                                                                                                                                                             ------------+
+| Karol               | wiking  | 1999-04-06 |   22 | NULL    | STATEK_BJORNA |                                                                                                                                                              01928374658 |
+| Marcin              | wiking  | 2000-03-01 |   21 | NULL    | STATEK_BJORNA |                                                                                                                                                              11223344556 |
+| Bjorn               | wiking  | 1989-01-01 |   50 | kapitan | NULL          |                                                                                                                                                              12345678912 |
+| Gertruda Nieszczera | syrena  | 2000-04-05 |   21 | NULL    | STATEK_BJORNA |                                                                                                                                                              20087635281 |
+| Tesciowa            | kobieta | 1933-03-23 |   88 | NULL    | STATEK_BJORNA |                                                                                                                                                              22334455569 |
+| Marcin              | wiking  | 1998-05-09 |   23 | NULL    | STATEK_BJORNA |                                                                                                                                                              56421895632 |
+| Drozd               | ptak    | 2020-10-27 |    1 | NULL    | KOT           |                                                                                                                                                              98765432109 |
++---------------------+---------+------------+------+---------+---------------+-                                                                                                                                                             ------------+
+7 rows in set (0.00 sec)
+
+mysql> UPDATE statek SET data_wodowania='1965-06-06' WHERE nazwa_statku='PIES';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE statek SET data_wodowania='1965-06-06' WHERE nazwa_statku='KOT';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> desc statek;
++----------------+-----------------------------------------+------+-----+-------                                                                                                                                                             --+-------+
+| Field          | Type                                    | Null | Key | Defaul                                                                                                                                                             t | Extra |
++----------------+-----------------------------------------+------+-----+-------                                                                                                                                                             --+-------+
+| nazwa_statku   | varchar(40)                             | NO   | PRI | NULL                                                                                                                                                                 |       |
+| rodzaj_statku  | enum('handlowy','wojenny','pasazerski') | YES  |     | NULL                                                                                                                                                                 |       |
+| data_wodowania | date                                    | NO   |     | NULL                                                                                                                                                                 |       |
+| max_ladownosc  | int                                     | NO   |     | NULL                                                                                                                                                                 |       |
++----------------+-----------------------------------------+------+-----+-------                                                                                                                                                             --+-------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE statek SET max_ladownosc='45.50' WHERE nazwa_statku='KOT';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT *FROM statek;
++---------------+---------------+----------------+---------------+
+| nazwa_statku  | rodzaj_statku | data_wodowania | max_ladownosc |
++---------------+---------------+----------------+---------------+
+| KOT           | pasazerski    | 1965-06-06     |          45.5 |
+| PIES          | wojenny       | 1965-06-06     |           100 |
+| STATEK_BJORNA | pasazerski    | 2021-06-05     |           120 |
++---------------+---------------+----------------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> UPDATE statek SET max_ladownosc='70' WHERE nazwa_statku='PIES';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT *FROM statek;
++---------------+---------------+----------------+---------------+
+| nazwa_statku  | rodzaj_statku | data_wodowania | max_ladownosc |
++---------------+---------------+----------------+---------------+
+| KOT           | pasazerski    | 1965-06-06     |          45.5 |
+| PIES          | wojenny       | 1965-06-06     |            70 |
+| STATEK_BJORNA | pasazerski    | 2021-06-05     |           120 |
++---------------+---------------+----------------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> DESC postac;
++--------------+------------------------------------------+------+-----+--------                                                                                                                                                             -+-------+
+| Field        | Type                                     | Null | Key | Default                                                                                                                                                              | Extra |
++--------------+------------------------------------------+------+-----+--------                                                                                                                                                             -+-------+
+| nazwa        | varchar(40)                              | NO   |     | NULL                                                                                                                                                                 |       |
+| rodzaj       | enum('wiking','ptak','kobieta','syrena') | YES  |     | NULL                                                                                                                                                                 |       |
+| data         | date                                     | NO   |     | NULL                                                                                                                                                                 |       |
+| wiek         | int                                      | NO   |     | NULL                                                                                                                                                                 |       |
+| funkcja      | varchar(40)                              | YES  |     | NULL                                                                                                                                                                 |       |
+| nazwa_statku | varchar(40)                              | YES  | MUL | NULL                                                                                                                                                                 |       |
+| pesel        | varchar(11)                              | NO   | PRI | NULL                                                                                                                                                                 |       |
++--------------+------------------------------------------+------+-----+--------                                                                                                                                                             -+-------+
+7 rows in set (0.00 sec)
+
+mysql> ALTER TABLE postac MODIFY rodzaj ENUM('wiking', 'ptak', 'kobieta', 'syrena', 'waz');
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO postac (nazwa, rodzaj, data, wiek, pesel) VALUES ('Loko', 'wa
+z', '2011-06-20')
+    -> ;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select *from postac;
++---------------------+---------+------------+------+---------+---------------+-                                                                                                                                                             ------------+
+| nazwa               | rodzaj  | data       | wiek | funkcja | nazwa_statku  |                                                                                                                                                              pesel       |
++---------------------+---------+------------+------+---------+---------------+-                                                                                                                                                             ------------+
+| Karol               | wiking  | 1999-04-06 |   22 | NULL    | STATEK_BJORNA |                                                                                                                                                              01928374658 |
+| Marcin              | wiking  | 2000-03-01 |   21 | NULL    | STATEK_BJORNA |                                                                                                                                                              11223344556 |
+| Loko                | waz     | 2011-06-20 |   10 | NULL    | NULL          |                                                                                                                                                              11276529847 |
+| Bjorn               | wiking  | 1989-01-01 |   50 | kapitan | NULL          |                                                                                                                                                              12345678912 |
+| Gertruda Nieszczera | syrena  | 2000-04-05 |   21 | NULL    | STATEK_BJORNA |                                                                                                                                                              20087635281 |
+| Tesciowa            | kobieta | 1933-03-23 |   88 | NULL    | STATEK_BJORNA |                                                                                                                                                              22334455569 |
+| Marcin              | wiking  | 1998-05-09 |   23 | NULL    | STATEK_BJORNA |                                                                                                                                                              56421895632 |
+| Drozd               | ptak    | 2020-10-27 |    1 | NULL    | KOT           |                                                                                                                                                              98765432109 |
++---------------------+---------+------------+------+---------+---------------+-                                                                                                                                                             ------------+
+8 rows in set (0.00 sec)
+
+mysql> desc postac;
++--------------+------------------------------------------------+------+-----+--                                                                                                                                                             -------+-------+
+| Field        | Type                                           | Null | Key | D                                                                                                                                                             efault | Extra |
++--------------+------------------------------------------------+------+-----+--                                                                                                                                                             -------+-------+
+| nazwa        | varchar(40)                                    | NO   |     | N                                                                                                                                                             ULL    |       |
+| rodzaj       | enum('wiking','ptak','kobieta','syrena','waz') | YES  |     | N                                                                                                                                                             ULL    |       |
+| data         | date                                           | NO   |     | N                                                                                                                                                             ULL    |       |
+| wiek         | int                                            | NO   |     | N                                                                                                                                                             ULL    |       |
+| funkcja      | varchar(40)                                    | YES  |     | N                                                                                                                                                             ULL    |       |
+| nazwa_statku | varchar(40)                                    | YES  | MUL | N                                                                                                                                                             ULL    |       |
+| pesel        | varchar(11)                                    | NO   | PRI | N                                                                                                                                                             ULL    |       |
++--------------+------------------------------------------------+------+-----+--                                                                                                                                                             -------+-------+
+7 rows in set (0.00 sec)
+
+mysql> CREATE TABLE marynarz (pesel VARCHAR (11) NOT NULL PRIMARY KEY, nazwa VARCHAR(40), rodzaj ENUM('wiking', 'ptak', 'kobieta', 'syrena', 'waz'), data DATE NOT NULL, wiek INT NOT NULL, funkcja VARCHAR (40));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> ALTER TABLE marynarz ADD nazwa_statku VARCHAR (40); ALTER TABLE marynarz ADD FOREIGN KEY (nazwa_statku) REFERENCES statek (nazwa_statku);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc marynarz;
++--------------+------------------------------------------------+------+-----+--                                                                                                                                                             -------+-------+
+| Field        | Type                                           | Null | Key | D                                                                                                                                                             efault | Extra |
++--------------+------------------------------------------------+------+-----+--                                                                                                                                                             -------+-------+
+| pesel        | varchar(11)                                    | NO   | PRI | N                                                                                                                                                             ULL    |       |
+| nazwa        | varchar(40)                                    | YES  |     | N                                                                                                                                                             ULL    |       |
+| rodzaj       | enum('wiking','ptak','kobieta','syrena','waz') | YES  |     | N                                                                                                                                                             ULL    |       |
+| data         | date                                           | NO   |     | N                                                                                                                                                             ULL    |       |
+| wiek         | int                                            | NO   |     | N                                                                                                                                                             ULL    |       |
+| funkcja      | varchar(40)                                    | YES  |     | N                                                                                                                                                             ULL    |       |
+| nazwa_statku | varchar(40)                                    | YES  | MUL | N                                                                                                                                                             ULL    |       |
++--------------+------------------------------------------------+------+-----+--                                                                                                                                                             -------+-------+
+7 rows in set (0.00 sec)
+
+mysql> select *from postac;
++---------------------+---------+------------+------+---------+---------------+-                                                                                                                                                             ------------+
+| nazwa               | rodzaj  | data       | wiek | funkcja | nazwa_statku  |                                                                                                                                                              pesel       |
++---------------------+---------+------------+------+---------+---------------+-                                                                                                                                                             ------------+
+| Karol               | wiking  | 1999-04-06 |   22 | NULL    | STATEK_BJORNA |                                                                                                                                                              01928374658 |
+| Marcin              | wiking  | 2000-03-01 |   21 | NULL    | STATEK_BJORNA |                                                                                                                                                              11223344556 |
+| Loko                | waz     | 2011-06-20 |   10 | NULL    | NULL          |                                                                                                                                                              11276529847 |
+| Bjorn               | wiking  | 1989-01-01 |   50 | kapitan | NULL          |                                                                                                                                                              12345678912 |
+| Gertruda Nieszczera | syrena  | 2000-04-05 |   21 | NULL    | STATEK_BJORNA |                                                                                                                                                              20087635281 |
+| Tesciowa            | kobieta | 1933-03-23 |   88 | NULL    | STATEK_BJORNA |                                                                                                                                                              22334455569 |
+| Marcin              | wiking  | 1998-05-09 |   23 | NULL    | STATEK_BJORNA |                                                                                                                                                              56421895632 |
+| Drozd               | ptak    | 2020-10-27 |    1 | NULL    | KOT           |                                                                                                                                                              98765432109 |
++---------------------+---------+------------+------+---------+---------------+-                                                                                                                                                             ------------+
+8 rows in set (0.00 sec)
+
+mysql> INSERT INTO marynarz (pesel, nazwa, rodzaj, data, wiek, nazwa_statku) VAL
+UES ('01928374658', 'Karol', 'wiking', ' 1999-04-06', '22', 'STATEK_BJORNA')
+    -> ;
+Query OK, 1 row affected (0.01 sec)
+
+
+mysql> INSERT INTO marynarz (pesel, nazwa, rodzaj, data, wiek, nazwa_statku) VALUES ('11223344556 ', 'Marcin', 'wiking', '2000-03-01 ', '21', 'STATEK_BJORNA');
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> INSERT INTO marynarz (pesel, nazwa, rodzaj, data, wiek, nazwa_statku) VALUES ('20087635281 ', 'Gertruda Nieszczera', 'syrena', ' 2000-04-05', '21', 'STATEK_BJORNA');
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> INSERT INTO marynarz (pesel, nazwa, rodzaj, data, wiek, nazwa_statku) VALUES ('22334455569', 'Tesciowa', 'kobieta', ' 1933-03-23', '88', 'STATEK_BJORNA';
+Query OK, 1 row affected (0.00 sec)
+
+
+mysql> INSERT INTO marynarz (pesel, nazwa, rodzaj, data, wiek, nazwa_statku) VALUES ('56421895632', 'Marcin', 'wiking', ' 1998-05-09', '23', 'STATEK_BJORNA'); 
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select *from marynarz;
++-------------+---------------------+---------+------------+------+---------+---                                                                                                                                                             ------------+
+| pesel       | nazwa               | rodzaj  | data       | wiek | funkcja | na                                                                                                                                                             zwa_statku  |
++-------------+---------------------+---------+------------+------+---------+---                                                                                                                                                             ------------+
+| 01928374658 | Karol               | wiking  | 1999-04-06 |   22 | NULL    | ST                                                                                                                                                             ATEK_BJORNA |
+| 11223344556 | Marcin              | wiking  | 2000-03-01 |   21 | NULL    | ST                                                                                                                                                             ATEK_BJORNA |
+| 20087635281 | Gertruda Nieszczera | syrena  | 2000-04-05 |   21 | NULL    | ST                                                                                                                                                             ATEK_BJORNA |
+| 22334455569 | Tesciowa            | kobieta | 1933-03-23 |   88 | NULL    | ST                                                                                                                                                             ATEK_BJORNA |
+| 56421895632 | Marcin              | wiking  | 1998-05-09 |   23 | NULL    | ST                                                                                                                                                             ATEK_BJORNA |
++-------------+---------------------+---------+------------+------+---------+---                                                                                                                                                             ------------+
+5 rows in set (0.00 sec)
+
+mysql> UPDATE postac SET nazwa_statku=NULL;
+Query OK, 6 rows affected (0.00 sec)
+Rows matched: 8  Changed: 6  Warnings: 0
+
+mysql>
+mysql> select *from postac;
++---------------------+---------+------------+------+---------+--------------+-------------+
+| nazwa               | rodzaj  | data       | wiek | funkcja | nazwa_statku | pesel       |
++---------------------+---------+------------+------+---------+--------------+-------------+
+| Karol               | wiking  | 1999-04-06 |   22 | NULL    | NULL         | 01928374658 |
+| Marcin              | wiking  | 2000-03-01 |   21 | NULL    | NULL         | 11223344556 |
+| Loko                | waz     | 2011-06-20 |   10 | NULL    | NULL         | 11276529847 |
+| Bjorn               | wiking  | 1989-01-01 |   50 | kapitan | NULL         | 12345678912 |
+| Gertruda Nieszczera | syrena  | 2000-04-05 |   21 | NULL    | NULL         | 20087635281 |
+| Tesciowa            | kobieta | 1933-03-23 |   88 | NULL    | NULL         | 22334455569 |
+| Marcin              | wiking  | 1998-05-09 |   23 | NULL    | NULL         | 56421895632 |
+| Drozd               | ptak    | 2020-10-27 |    1 | NULL    | NULL         | 98765432109 |
++---------------------+---------+------------+------+---------+--------------+-------------+
+8 rows in set (0.00 sec)
+
+mysql> DELETE FROM postac WHERE nazwa='Karol';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select *from postac;
++---------------------+---------+------------+------+---------+--------------+-------------+
+| nazwa               | rodzaj  | data       | wiek | funkcja | nazwa_statku | pesel       |
++---------------------+---------+------------+------+---------+--------------+-------------+
+| Marcin              | wiking  | 2000-03-01 |   21 | NULL    | NULL         | 11223344556 |
+| Loko                | waz     | 2011-06-20 |   10 | NULL    | NULL         | 11276529847 |
+| Bjorn               | wiking  | 1989-01-01 |   50 | kapitan | NULL         | 12345678912 |
+| Gertruda Nieszczera | syrena  | 2000-04-05 |   21 | NULL    | NULL         | 20087635281 |
+| Tesciowa            | kobieta | 1933-03-23 |   88 | NULL    | NULL         | 22334455569 |
+| Marcin              | wiking  | 1998-05-09 |   23 | NULL    | NULL         | 56421895632 |
+| Drozd               | ptak    | 2020-10-27 |    1 | NULL    | NULL         | 98765432109 |
++---------------------+---------+------------+------+---------+--------------+-------------+
+7 rows in set (0.00 sec)
+
+mysql> select *from statek;
++---------------+---------------+----------------+---------------+
+| nazwa_statku  | rodzaj_statku | data_wodowania | max_ladownosc |
++---------------+---------------+----------------+---------------+
+| KOT           | pasazerski    | 1965-06-06     |          45.5 |
+| PIES          | wojenny       | 1965-06-06     |            70 |
+| STATEK_BJORNA | pasazerski    | 2021-06-05     |           120 |
++---------------+---------------+----------------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> ALTER TABLE postac DROP FOREIGN KEY postac_ibfk_1;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc postac;
++--------------+------------------------------------------------+------+-----+---------+-------+
+| Field        | Type                                           | Null | Key | Default | Extra |
++--------------+------------------------------------------------+------+-----+---------+-------+
+| nazwa        | varchar(40)                                    | NO   |     | NULL    |       |
+| rodzaj       | enum('wiking','ptak','kobieta','syrena','waz') | YES  |     | NULL    |       |
+| data         | date                                           | NO   |     | NULL    |       |
+| wiek         | int                                            | NO   |     | NULL    |       |
+| funkcja      | varchar(40)                                    | YES  |     | NULL    |       |
+| nazwa_statku | varchar(40)                                    | YES  | MUL | NULL    |       |
+| pesel        | varchar(11)                                    | NO   | PRI | NULL    |       |
++--------------+------------------------------------------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> ALTER TABLE marynarz DROP FOREIGN KEY marynarz_ibfk_1;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc marynarz;
++--------------+------------------------------------------------+------+-----+---------+-------+
+| Field        | Type                                           | Null | Key | Default | Extra |
++--------------+------------------------------------------------+------+-----+---------+-------+
+| pesel        | varchar(11)                                    | NO   | PRI | NULL    |       |
+| nazwa        | varchar(40)                                    | YES  |     | NULL    |       |
+| rodzaj       | enum('wiking','ptak','kobieta','syrena','waz') | YES  |     | NULL    |       |
+| data         | date                                           | NO   |     | NULL    |       |
+| wiek         | int                                            | NO   |     | NULL    |       |
+| funkcja      | varchar(40)                                    | YES  |     | NULL    |       |
+| nazwa_statku | varchar(40)                                    | YES  | MUL | NULL    |       |
++--------------+------------------------------------------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> DROP TABLE statek;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE TABLE zwierz (id_zwierza INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+nazwa VARCHAR(40), wiek INT);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc zwierz;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| id_zwierza | int         | NO   | PRI | NULL    | auto_increment |
+| nazwa      | varchar(40) | YES  |     | NULL    |                |
+| wiek       | int         | YES  |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO zwierz VALUES ('1276529847', 'Loko', '10';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> INSERT INTO zwierz (id_zwierza, nazwa, wiek) VALUES ('1276529847', 'Loko'
+, '10';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> INSERT INTO zwierz VALUES ('8765432109', 'Drozd', '1');
+ERROR 1264 (22003): Out of range value for column 'id_zwierza' at row 1
+mysql> desc zwierz;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| id_zwierza | int         | NO   | PRI | NULL    | auto_increment |
+| nazwa      | varchar(40) | YES  |     | NULL    |                |
+| wiek       | int         | YES  |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into zwierz(id_zwierza) values ('1276529847');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into zwierz (nazwa, wiek) values ('Loko', '10') WHERE id_zwierza='1276529847';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE id_zwierza='1276529847'' at line 1
+mysql> UPDATE zwierz SET nazwa='Loko' WHERE id_zwierza='1276529847';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE zwierz SET wiek='10' WHERE nazwa='Loko';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select *from zwierz;
++------------+-------+------+
+| id_zwierza | nazwa | wiek |
++------------+-------+------+
+| 1276529847 | Loko  |   10 |
++------------+-------+------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO zwierz VALUES ('8765432109', 'Drozd', '1');
+ERROR 1264 (22003): Out of range value for column 'id_zwierza' at row 1
+mysql> INSERT INTO zwierz(id_zwierza) VALUES ('8765432109');
+ERROR 1264 (22003): Out of range value for column 'id_zwierza' at row 1
+mysql> INSERT INTO zwierz (nazwa) VALUES ('Drozd');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> UPDATE zwierz SET wiek='1' WHERE nazwa='Drozd';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE zwierz SET id_zwierza='8765432109' WHERE nazwa='Drozd';
+ERROR 1264 (22003): Out of range value for column 'id_zwierza' at row 1
+mysql> UPDATE zwierz SET id_zwierza='8765432109' WHERE nazwa='Drozd';
+ERROR 1264 (22003): Out of range value for column 'id_zwierza' at row 1
+mysql> UPDATE zwierz SET id_zwierza='8765432109' WHERE wiek='1';
+ERROR 1264 (22003): Out of range value for column 'id_zwierza' at row 1
+mysql> desc zwierz;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| id_zwierza | int         | NO   | PRI | NULL    | auto_increment |
+| nazwa      | varchar(40) | YES  |     | NULL    |                |
+| wiek       | int         | YES  |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> ALTER TABLE zwierz MODIFY id_zwierza UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL' at line 1
+mysql> ALTER TABLE zwierz MODIFY id_zwierza INT UNSIGNED AUTO_INCREMENT PRIMARY
+KEY NOT NULL;
+ERROR 1068 (42000): Multiple primary key defined
+mysql> ALTER TABLE zwierz MODIFY id_zwierza INT UNSIGNED;
+Query OK, 2 rows affected (0.11 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> DESC zwierz;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| id_zwierza | int unsigned | NO   | PRI | NULL    |       |
+| nazwa      | varchar(40)  | YES  |     | NULL    |       |
+| wiek       | int          | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> UPDATE zwierz SET id_zwierza='8765432109' WHERE wiek='1';
+ERROR 1264 (22003): Out of range value for column 'id_zwierza' at row 1
+mysql> ALTER TABLE zwierz MODIFY id_zwierza INT UNSIGNED AUTO_INCREMENT;
+Query OK, 2 rows affected (0.05 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> DESC zwierz;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| id_zwierza | int unsigned | NO   | PRI | NULL    | auto_increment |
+| nazwa      | varchar(40)  | YES  |     | NULL    |                |
+| wiek       | int          | YES  |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> UPDATE zwierz SET id_zwierza='8765432109' WHERE wiek='1';
+ERROR 1264 (22003): Out of range value for column 'id_zwierza' at row 1
+mysql> DESC postac;
++--------------+------------------------------------------------+------+-----+---------+-------+
+| Field        | Type                                           | Null | Key | Default | Extra |
++--------------+------------------------------------------------+------+-----+---------+-------+
+| nazwa        | varchar(40)                                    | NO   |     | NULL    |       |
+| rodzaj       | enum('wiking','ptak','kobieta','syrena','waz') | YES  |     | NULL    |       |
+| data         | date                                           | NO   |     | NULL    |       |
+| wiek         | int                                            | NO   |     | NULL    |       |
+| funkcja      | varchar(40)                                    | YES  |     | NULL    |       |
+| nazwa_statku | varchar(40)                                    | YES  | MUL | NULL    |       |
+| pesel        | varchar(11)                                    | NO   | PRI | NULL    |       |
++--------------+------------------------------------------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> ALTER TABLE zwierz MODIFY id_zwierza VARCHAR(11) AUTO_INCREMENT;
+ERROR 1063 (42000): Incorrect column specifier for column 'id_zwierza'
+mysql> ALTER TABLE zwierz MODIFY id_zwierza VARCHAR(11);
+Query OK, 2 rows affected (0.04 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> UPDATE zwierz SET id_zwierza='8765432109' WHERE wiek='1';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> DESC zwierz;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| id_zwierza | varchar(11) | NO   | PRI | NULL    |       |
+| nazwa      | varchar(40) | YES  |     | NULL    |       |
+| wiek       | int         | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select *from zwierz;
++------------+-------+------+
+| id_zwierza | nazwa | wiek |
++------------+-------+------+
+| 1276529847 | Loko  |   10 |
+| 8765432109 | Drozd |    1 |
++------------+-------+------+
+2 rows in set (0.00 sec)

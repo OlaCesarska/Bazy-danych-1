@@ -1,0 +1,214 @@
+
+mysql> use cesarskaa;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++---------------------+
+| Tables_in_cesarskaa |
++---------------------+
+| ekwipunek           |
+| kreatura            |
+| marynarz            |
+| postac              |
+| pracownik           |
+| projekt             |
+| przetwory           |
+| walizka             |
+| zasob               |
+| zwierz              |
++---------------------+
+10 rows in set (0.01 sec)
+
+
+mysql> select avg(waga) AS 'srednia waga wikingow' from kreatura where rodzaj='wiking';
++-----------------------+
+| srednia waga wikingow |
++-----------------------+
+|               95.1111 |
++-----------------------+
+1 row in set (0.00 sec)
+
+mysql>  select rodzaj, avg(waga) AS 'srednia waga kreatur', count(rodzaj)AS 'liczba kreatur rodzaju' FROM kreatura GROUP BY rodzaj;
++---------+----------------------+------------------------+
+| rodzaj  | srednia waga kreatur | liczba kreatur rodzaju |
++---------+----------------------+------------------------+
+| wiking  |              95.1111 |                      9 |
+| ryba    |            1050.5000 |                      2 |
+| waz     |               3.0000 |                      1 |
+| ptak    |               2.0000 |                      2 |
+| wiedzma |              41.2500 |                      4 |
+| malpa   |              32.0000 |                      1 |
++---------+----------------------+------------------------+
+6 rows in set (0.00 sec)
+
+mysql> select avg(year(dataUr)) AS 'sredni wiek', rodzaj from kreatura group by rodzaj;
++-------------+---------+
+| sredni wiek | rodzaj  |
++-------------+---------+
+|   1670.4444 | wiking  |
+|   1675.5000 | ryba    |
+|   1677.0000 | waz     |
+|   1675.5000 | ptak    |
+|   1491.2500 | wiedzma |
+|   1672.0000 | malpa   |
++-------------+---------+
+6 rows in set (0.00 sec)
+
+
+mysql> select SUM(waga) AS 'suma wag zasobow', rodzaj from zasob group by rodzaj
+;
++------------------+--------------------+
+| suma wag zasobow | rodzaj             |
++------------------+--------------------+
+|           130.00 | jedzenie           |
+|            13.00 | narzedzie          |
+|             9.10 | NULL               |
+|            33.10 | ubranie            |
+|             6.00 | narzedzie zbrodni  |
+|             0.60 | material budowlany |
+|             4.00 | miejsce wypoczynku |
++------------------+--------------------+
+7 rows in set (0.10 sec)
+
+mysql> select count( nazwa), nazwa from zasob group by nazwa;
++---------------+-------------------+
+| count( nazwa) | nazwa             |
++---------------+-------------------+
+|             3 | kokos             |
+|             1 | siekiera          |
+|             2 | banan             |
+|             1 | figa              |
+|             1 | krokodyl          |
+|             1 | bataty            |
+|             1 | opos              |
+|             4 | stanik            |
+|             1 | buty              |
+|             1 | lisc palmowy      |
+|             1 | skora geparda     |
+|             1 | kiel slonia       |
+|             1 | topor             |
+|             1 | dzida             |
+|             1 | luk               |
+|             1 | pnacza            |
+|             1 | deski             |
+|             1 | hamak             |
+|             1 | chatka na drzewie |
+|             1 | nie wiadomo co    |
+|             1 | ogien do ziania   |
+|             1 | miotla            |
++---------------+-------------------+
+22 rows in set (0.00 sec)
+
+mysql> select count( nazwa), nazwa from zasob group by nazwa HAVING MIN(ilosc)>1;
++---------------+-----------------+
+| count( nazwa) | nazwa           |
++---------------+-----------------+
+|             2 | banan           |
+|             1 | figa            |
+|             1 | bataty          |
+|             1 | opos            |
+|             4 | stanik          |
+|             1 | buty            |
+|             1 | lisc palmowy    |
+|             1 | skora geparda   |
+|             1 | kiel slonia     |
+|             1 | dzida           |
+|             1 | luk             |
+|             1 | pnacza          |
+|             1 | deski           |
+|             1 | ogien do ziania |
++---------------+-----------------+
+14 rows in set (0.11 sec)
+
+mysql> select kreatura.nazwa, ekwipunek.idZasobu, ekwipunek.ilosc from kreatura INNER JOIN ekwipunek ON kreatura.idKreatury = ekwipunek.idEkwipunku;
++----------------------------+----------+-------+
+| nazwa                      | idZasobu | ilosc |
++----------------------------+----------+-------+
+| Bjorn                      |        1 |     2 |
+| Brutal                     |       10 |     1 |
+| Khorad                     |       14 |     3 |
+| Birgun                     |       15 |    53 |
+| Defgard                    |        2 |     3 |
+| Astrid                     |        2 |     2 |
+| Ibra                       |        4 |     2 |
+| Bjolkolur                  |       23 |     1 |
+| Nemo                       |       18 |     1 |
+| Loko                       |        1 |     4 |
+| Drozd                      |       17 |     1 |
+| Ara                        |       16 |     1 |
+| Szczeki                    |       19 |     1 |
+| Tesciowa                   |       25 |     2 |
+| Tiki                       |       27 |     1 |
+| Dziadek                    |       24 |     1 |
+| sztuczna szczeka tesciowej |       26 |     1 |
+| Tesciowa dziadka           |       20 |     1 |
++----------------------------+----------+-------+
+18 rows in set (0.01 sec)
+
+mysql> select kreatura.nazwa, ekwipunek.idZasobu from kreatura JOIN ekwipunek ON kreatura.idKreatury = ekwipunek.idKreatury;
++-----------+----------+
+| nazwa     | idZasobu |
++-----------+----------+
+| Bjorn     |        1 |
+| Bjorn     |       10 |
+| Bjorn     |       14 |
+| Bjorn     |       15 |
+| Bjorn     |        2 |
+| Brutal    |        2 |
+| Brutal    |        4 |
+| Bjorn     |       23 |
+| Bjorn     |       18 |
+| Astrid    |        1 |
+| Khorad    |       17 |
+| Ibra      |       16 |
+| Ibra      |       19 |
+| Tesciowa  |       25 |
+| Tesciowa  |       27 |
+| Tesciowa  |       24 |
+| Tesciowa  |       26 |
+| Astrid    |       20 |
+| Defgard   |       17 |
+| Bjolkolur |       21 |
+| Drozd     |       13 |
+| Bjolkolur |       22 |
+| Szczeki   |        9 |
+| Defgard   |        2 |
+| Defgard   |       21 |
+| Defgard   |       16 |
+| Astrid    |       13 |
++-----------+----------+
+27 rows in set (0.00 sec)
+
+mysql> select kreatura.nazwa from kreatura WHERE NOT EXISTS (select *from ekwipu  nek where kreatura.idKreatury = ekwipunek.idKreatury);
++----------------------------+
+| nazwa                      |
++----------------------------+
+| Birgun                     |
+| Nemo                       |
+| Loko                       |
+| Ara                        |
+| Tiki                       |
+| Dziadek                    |
+| sztuczna szczeka tesciowej |
+| Tesciowa dziadka           |
+| Babajaga                   |
++----------------------------+
+9 rows in set (0.38 sec)
+
+mysql> select nazwa, dataUr from kreatura where rodzaj = 'wiking' and dataUr > '1670-01-01' and dataUr < '1699-12-31';
++-----------+------------+
+| nazwa     | dataUr     |
++-----------+------------+
+| Bjorn     | 1670-04-01 |
+| Brutal    | 1672-12-24 |
+| Khorad    | 1671-07-15 |
+| Birgun    | 1675-05-11 |
+| Defgard   | 1674-07-05 |
+| Astrid    | 1677-08-18 |
+| Ibra      | 1674-02-03 |
+| Bjolkolur | 1676-03-30 |
++-----------+------------+
+8 rows in set (0.12 sec)
+

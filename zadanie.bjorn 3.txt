@@ -1,0 +1,498 @@
+Linux bad2 4.10.17-1-pve #1 SMP PVE 4.10.17-16 (Tue, 11 Jul 2017 09:55:44 +0200) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Mon Nov 22 12:25:23 2021 from 31.60.234.128
+cesarskaa@bad2:~$ mysql -u cesarskaa -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 2035
+Server version: 8.0.22 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| cesarskaa          |
+| information_schema |
+| wikingowie         |
++--------------------+
+3 rows in set (0.01 sec)
+
+mysql> use wikingowie;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++----------------------+
+| Tables_in_wikingowie |
++----------------------+
+| ekwipunek            |
+| etapy_wyprawy        |
+| kreatura             |
+| sektor               |
+| uczestnicy           |
+| wyprawa              |
+| zasob                |
++----------------------+
+7 rows in set (0.00 sec)
+
+mysql> desc kreatura;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| idKreatury | int          | NO   | PRI | NULL    |       |
+| nazwa      | varchar(30)  | YES  |     | NULL    |       |
+| rodzaj     | varchar(30)  | YES  |     | NULL    |       |
+| dataUr     | date         | YES  |     | NULL    |       |
+| waga       | int unsigned | YES  |     | NULL    |       |
+| udzwig     | int unsigned | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> select *from kreatura;
++------------+----------------------------+---------+------------+------+--------+
+| idKreatury | nazwa                      | rodzaj  | dataUr     | waga | udzwig |
++------------+----------------------------+---------+------------+------+--------+
+|          1 | Bjorn                      | wiking  | 1670-04-01 |   99 |     80 |
+|          2 | Brutal                     | wiking  | 1672-12-24 |  120 |     85 |
+|          3 | Khorad                     | wiking  | 1671-07-15 |  105 |     81 |
+|          4 | Birgun                     | wiking  | 1675-05-11 |   88 |     66 |
+|          5 | Defgard                    | wiking  | 1674-07-05 |  100 |     72 |
+|          6 | Astrid                     | wiking  | 1677-08-18 |   75 |     49 |
+|          7 | Ibra                       | wiking  | 1674-02-03 |  105 |     87 |
+|          8 | Bjolkolur                  | wiking  | 1676-03-30 |  110 |     93 |
+|          9 | Nemo                       | ryba    | 1677-10-02 |    1 |      1 |
+|         10 | Loko                       | waz     | 1677-10-05 |    3 |      4 |
+|         11 | Drozd                      | ptak    | 1675-07-07 |    2 |      1 |
+|         12 | Ara                        | ptak    | 1676-05-05 |    2 |      1 |
+|         13 | Szczeki                    | ryba    | 1674-04-06 | 2100 |    600 |
+|         14 | Tesciowa                   | wiedzma | 1655-10-01 |   65 |     40 |
+|         15 | Tiki                       | malpa   | 1672-08-08 |   32 |     25 |
+|         16 | Dziadek                    | wiking  | 1645-01-23 |   54 |    100 |
+|         17 | sztuczna szczeka tesciowej | wiedzma | 1680-08-13 |    2 |      1 |
+|         18 | Tesciowa dziadka           | wiedzma | 1630-04-30 |   78 |     12 |
+|        100 | Babajaga                   | wiedzma | 1000-01-01 |   20 |   1000 |
++------------+----------------------------+---------+------------+------+--------+
+19 rows in set (0.00 sec)
+
+mysql> desc kreatura;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| idKreatury | int          | NO   | PRI | NULL    |       |
+| nazwa      | varchar(30)  | YES  |     | NULL    |       |
+| rodzaj     | varchar(30)  | YES  |     | NULL    |       |
+| dataUr     | date         | YES  |     | NULL    |       |
+| waga       | int unsigned | YES  |     | NULL    |       |
+| udzwig     | int unsigned | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> INSERT INTO wikingowie, kreatura (idKreatury, nazwa, rodzaj, dataUr, waga, udzwig) SELECT idKreatury, nazwa, rodzaj, dataUr, waga, udzwig FROM cesarskaa, kreatura;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', kreatura (idKreatury, nazwa, rodzaj, dataUr, waga, udzwig) SELECT idKreatury, ' at line 1
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| cesarskaa          |
+| information_schema |
+| wikingowie         |
++--------------------+
+3 rows in set (0.01 sec)
+
+mysql> use cesarskaa;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++---------------------+
+| Tables_in_cesarskaa |
++---------------------+
+| marynarz            |
+| postac              |
+| pracownik           |
+| projekt             |
+| przetwory           |
+| walizka             |
+| zwierz              |
++---------------------+
+7 rows in set (0.00 sec)
+
+mysql> CREATE TABLE cesarskaa.kreatura AS SELECT *FROM wikingowie.kreatura;
+Query OK, 19 rows affected (0.02 sec)
+Records: 19  Duplicates: 0  Warnings: 0
+
+mysql> select *from kreatura;
++------------+----------------------------+---------+------------+------+--------+
+| idKreatury | nazwa                      | rodzaj  | dataUr     | waga | udzwig |
++------------+----------------------------+---------+------------+------+--------+
+|          1 | Bjorn                      | wiking  | 1670-04-01 |   99 |     80 |
+|          2 | Brutal                     | wiking  | 1672-12-24 |  120 |     85 |
+|          3 | Khorad                     | wiking  | 1671-07-15 |  105 |     81 |
+|          4 | Birgun                     | wiking  | 1675-05-11 |   88 |     66 |
+|          5 | Defgard                    | wiking  | 1674-07-05 |  100 |     72 |
+|          6 | Astrid                     | wiking  | 1677-08-18 |   75 |     49 |
+|          7 | Ibra                       | wiking  | 1674-02-03 |  105 |     87 |
+|          8 | Bjolkolur                  | wiking  | 1676-03-30 |  110 |     93 |
+|          9 | Nemo                       | ryba    | 1677-10-02 |    1 |      1 |
+|         10 | Loko                       | waz     | 1677-10-05 |    3 |      4 |
+|         11 | Drozd                      | ptak    | 1675-07-07 |    2 |      1 |
+|         12 | Ara                        | ptak    | 1676-05-05 |    2 |      1 |
+|         13 | Szczeki                    | ryba    | 1674-04-06 | 2100 |    600 |
+|         14 | Tesciowa                   | wiedzma | 1655-10-01 |   65 |     40 |
+|         15 | Tiki                       | malpa   | 1672-08-08 |   32 |     25 |
+|         16 | Dziadek                    | wiking  | 1645-01-23 |   54 |    100 |
+|         17 | sztuczna szczeka tesciowej | wiedzma | 1680-08-13 |    2 |      1 |
+|         18 | Tesciowa dziadka           | wiedzma | 1630-04-30 |   78 |     12 |
+|        100 | Babajaga                   | wiedzma | 1000-01-01 |   20 |   1000 |
++------------+----------------------------+---------+------------+------+--------+
+19 rows in set (0.00 sec)
+
+mysql> CREATE TABLE cesarskaa.zasob AS SELECT *FROM wikingowie.zasob;
+Query OK, 28 rows affected, 1 warning (0.02 sec)
+Records: 28  Duplicates: 0  Warnings: 1
+
+mysql> CREATE TABLE cesarskaa.ekwipunek AS SELECT *FROM wikingowie.ekwipunek;
+Query OK, 28 rows affected (0.03 sec)
+Records: 28  Duplicates: 0  Warnings: 0
+
+mysql> desc zasob;
++----------------+--------------+------+-----+---------+-------+
+| Field          | Type         | Null | Key | Default | Extra |
++----------------+--------------+------+-----+---------+-------+
+| idZasobu       | int          | NO   |     | 0       |       |
+| nazwa          | varchar(50)  | YES  |     | NULL    |       |
+| waga           | float(6,2)   | YES  |     | NULL    |       |
+| ilosc          | int unsigned | YES  |     | NULL    |       |
+| dataPozyskania | date         | YES  |     | NULL    |       |
+| rodzaj         | varchar(50)  | YES  |     | NULL    |       |
++----------------+--------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> select *from zasob;
++----------+-------------------+--------+-------+----------------+--------------------+
+| idZasobu | nazwa             | waga   | ilosc | dataPozyskania | rodzaj             |
++----------+-------------------+--------+-------+----------------+--------------------+
+|        1 | kokos             |   2.00 |     3 | 2007-07-23     | jedzenie           |
+|        2 | siekiera          |  13.00 |     1 | 1974-01-04     | narzedzie          |
+|        3 | kokos             |   4.00 |     1 | 2004-09-03     | jedzenie           |
+|        4 | kokos             |   7.00 |     2 | 2010-10-13     | jedzenie           |
+|        5 | banan             |   2.00 |    12 | 2015-11-09     | jedzenie           |
+|        6 | figa              |   1.00 |    30 | 2001-12-14     | jedzenie           |
+|        7 | krokodyl          | 100.00 |     1 | 2005-07-14     | jedzenie           |
+|        8 | bataty            |   1.00 |    30 | 2002-07-01     | jedzenie           |
+|        9 | opos              |  12.00 |     2 | 2006-08-01     | jedzenie           |
+|       10 | stanik            |   0.20 |   120 | 2004-06-01     | NULL               |
+|       11 | stanik            |   0.30 |    20 | 2004-06-15     | NULL               |
+|       12 | stanik            |   0.40 |    30 | 2004-07-15     | NULL               |
+|       13 | stanik            |   0.20 |    40 | 2012-08-15     | NULL               |
+|       14 | buty              |   2.00 |     2 | 2010-08-15     | ubranie            |
+|       15 | lisc palmowy      |   0.10 |  1000 | 2001-03-25     | ubranie            |
+|       16 | skora geparda     |  30.00 |     7 | 2013-07-25     | ubranie            |
+|       17 | kiel slonia       |   1.00 |     9 | 2003-01-25     | ubranie            |
+|       18 | topor             |   3.00 |     1 | 2000-01-25     | narzedzie zbrodni  |
+|       19 | dzida             |   2.00 |    10 | 2001-03-21     | narzedzie zbrodni  |
+|       20 | luk               |   1.00 |     3 | 2003-04-17     | narzedzie zbrodni  |
+|       21 | pnacza            |   0.10 |   300 | 2010-02-17     | material budowlany |
+|       22 | deski             |   0.50 |   120 | 2008-02-17     | material budowlany |
+|       23 | hamak             |   2.00 |     1 | 2001-01-17     | miejsce wypoczynku |
+|       24 | chatka na drzewie |   2.00 |     1 | 2012-08-17     | miejsce wypoczynku |
+|       25 | nie wiadomo co    |   4.00 |     1 | 2001-08-10     | NULL               |
+|       26 | ogien do ziania   |   1.00 |     4 | 2002-08-10     | NULL               |
+|       27 | miotla            |   3.00 |     1 | 2005-10-10     | NULL               |
+|       28 | banan             |   1.00 |     7 | 2008-08-21     | jedzenie           |
++----------+-------------------+--------+-------+----------------+--------------------+
+28 rows in set (0.09 sec)
+
+mysql> select *from zasob WHERE rodzaj='jedzenie';
++----------+----------+--------+-------+----------------+----------+
+| idZasobu | nazwa    | waga   | ilosc | dataPozyskania | rodzaj   |
++----------+----------+--------+-------+----------------+----------+
+|        1 | kokos    |   2.00 |     3 | 2007-07-23     | jedzenie |
+|        3 | kokos    |   4.00 |     1 | 2004-09-03     | jedzenie |
+|        4 | kokos    |   7.00 |     2 | 2010-10-13     | jedzenie |
+|        5 | banan    |   2.00 |    12 | 2015-11-09     | jedzenie |
+|        6 | figa     |   1.00 |    30 | 2001-12-14     | jedzenie |
+|        7 | krokodyl | 100.00 |     1 | 2005-07-14     | jedzenie |
+|        8 | bataty   |   1.00 |    30 | 2002-07-01     | jedzenie |
+|        9 | opos     |  12.00 |     2 | 2006-08-01     | jedzenie |
+|       28 | banan    |   1.00 |     7 | 2008-08-21     | jedzenie |
++----------+----------+--------+-------+----------------+----------+
+9 rows in set (0.00 sec)
+
+mysql> select idZasobu, ilosc FROM zasob WHERE idZasobu IN ('1', '3', '5');
++----------+-------+
+| idZasobu | ilosc |
++----------+-------+
+|        1 |     3 |
+|        3 |     1 |
+|        5 |    12 |
++----------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select rodzaj, udzwig FROM kreatura WHERE rodzaj IN ('wiking','ryba', 'waz', 'ptak', 'malpa') AND udzwig>50;
++--------+--------+
+| rodzaj | udzwig |
++--------+--------+
+| wiking |     80 |
+| wiking |     85 |
+| wiking |     81 |
+| wiking |     66 |
+| wiking |     72 |
+| wiking |     87 |
+| wiking |     93 |
+| ryba   |    600 |
+| wiking |    100 |
++--------+--------+
+9 rows in set (0.00 sec)
+
+mysql> select nazwa, waga from zasob where waga <=5 and waga >=2;
++-------------------+------+
+| nazwa             | waga |
++-------------------+------+
+| kokos             | 2.00 |
+| kokos             | 4.00 |
+| banan             | 2.00 |
+| buty              | 2.00 |
+| topor             | 3.00 |
+| dzida             | 2.00 |
+| hamak             | 2.00 |
+| chatka na drzewie | 2.00 |
+| nie wiadomo co    | 4.00 |
+| miotla            | 3.00 |
++-------------------+------+
+10 rows in set (0.03 sec)
+
+
+mysql> select *from kreatura where udzwig>=30 AND udzwig<=70;                   +------------+----------+---------+------------+------+--------+
+| idKreatury | nazwa    | rodzaj  | dataUr     | waga | udzwig |
++------------+----------+---------+------------+------+--------+
+|          4 | Birgun   | wiking  | 1675-05-11 |   88 |     66 |
+|          6 | Astrid   | wiking  | 1677-08-18 |   75 |     49 |
+|         14 | Tesciowa | wiedzma | 1655-10-01 |   65 |     40 |
++------------+----------+---------+------------+------+--------+
+3 rows in set (0.01 sec)
+
+mysql> select *from zasob where month(dataPozyskania) IN ('08', '07');
++----------+-------------------+--------+-------+----------------+--------------------+
+| idZasobu | nazwa             | waga   | ilosc | dataPozyskania | rodzaj             |
++----------+-------------------+--------+-------+----------------+--------------------+
+|        1 | kokos             |   2.00 |     3 | 2007-07-23     | jedzenie           |
+|        7 | krokodyl          | 100.00 |     1 | 2005-07-14     | jedzenie           |
+|        8 | bataty            |   1.00 |    30 | 2002-07-01     | jedzenie           |
+|        9 | opos              |  12.00 |     2 | 2006-08-01     | jedzenie           |
+|       12 | stanik            |   0.40 |    30 | 2004-07-15     | NULL               |
+|       13 | stanik            |   0.20 |    40 | 2012-08-15     | NULL               |
+|       14 | buty              |   2.00 |     2 | 2010-08-15     | ubranie            |
+|       16 | skora geparda     |  30.00 |     7 | 2013-07-25     | ubranie            |
+|       24 | chatka na drzewie |   2.00 |     1 | 2012-08-17     | miejsce wypoczynku |
+|       25 | nie wiadomo co    |   4.00 |     1 | 2001-08-10     | NULL               |
+|       26 | ogien do ziania   |   1.00 |     4 | 2002-08-10     | NULL               |
+|       28 | banan             |   1.00 |     7 | 2008-08-21     | jedzenie           |
++----------+-------------------+--------+-------+----------------+--------------------+
+12 rows in set (0.03 sec)
+
+mysql> select nazwa, waga, rodzaj from zasob order by waga;
++-------------------+--------+--------------------+
+| nazwa             | waga   | rodzaj             |
++-------------------+--------+--------------------+
+| pnacza            |   0.10 | material budowlany |
+| lisc palmowy      |   0.10 | ubranie            |
+| stanik            |   0.20 | NULL               |
+| stanik            |   0.20 | NULL               |
+| stanik            |   0.30 | NULL               |
+| stanik            |   0.40 | NULL               |
+| deski             |   0.50 | material budowlany |
+| banan             |   1.00 | jedzenie           |
+| ogien do ziania   |   1.00 | NULL               |
+| luk               |   1.00 | narzedzie zbrodni  |
+| kiel slonia       |   1.00 | ubranie            |
+| bataty            |   1.00 | jedzenie           |
+| figa              |   1.00 | jedzenie           |
+| kokos             |   2.00 | jedzenie           |
+| chatka na drzewie |   2.00 | miejsce wypoczynku |
+| hamak             |   2.00 | miejsce wypoczynku |
+| banan             |   2.00 | jedzenie           |
+| dzida             |   2.00 | narzedzie zbrodni  |
+| buty              |   2.00 | ubranie            |
+| topor             |   3.00 | narzedzie zbrodni  |
+| miotla            |   3.00 | NULL               |
+| kokos             |   4.00 | jedzenie           |
+| nie wiadomo co    |   4.00 | NULL               |
+| kokos             |   7.00 | jedzenie           |
+| opos              |  12.00 | jedzenie           |
+| siekiera          |  13.00 | narzedzie          |
+| skora geparda     |  30.00 | ubranie            |
+| krokodyl          | 100.00 | jedzenie           |
++-------------------+--------+--------------------+
+28 rows in set (0.03 sec)
+
+mysql> select nazwa, dataUr from kreatura ORDER BY dataUr LIMIT 5;
++------------------+------------+
+| nazwa            | dataUr     |
++------------------+------------+
+| Babajaga         | 1000-01-01 |
+| Tesciowa dziadka | 1630-04-30 |
+| Dziadek          | 1645-01-23 |
+| Tesciowa         | 1655-10-01 |
+| Bjorn            | 1670-04-01 |
++------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select distinct nazwa from zasob;
++-------------------+
+| nazwa             |
++-------------------+
+| kokos             |
+| siekiera          |
+| banan             |
+| figa              |
+| krokodyl          |
+| bataty            |
+| opos              |
+| stanik            |
+| buty              |
+| lisc palmowy      |
+| skora geparda     |
+| kiel slonia       |
+| topor             |
+| dzida             |
+| luk               |
+| pnacza            |
+| deski             |
+| hamak             |
+| chatka na drzewie |
+| nie wiadomo co    |
+| ogien do ziania   |
+| miotla            |
++-------------------+
+22 rows in set (0.14 sec)
+
+mysql> SELECT CONCAT ( nazwa,' ', rodzaj) AS 'nazwa-rodzaj' FROM kreatura WHERE
+rodzaj LIKE 'wi%';
++------------------------------------+
+| nazwa-rodzaj                       |
++------------------------------------+
+| Bjorn wiking                       |
+| Brutal wiking                      |
+| Khorad wiking                      |
+| Birgun wiking                      |
+| Defgard wiking                     |
+| Astrid wiking                      |
+| Ibra wiking                        |
+| Bjolkolur wiking                   |
+| Tesciowa wiedzma                   |
+| Dziadek wiking                     |
+| sztuczna szczeka tesciowej wiedzma |
+| Tesciowa dziadka wiedzma           |
+| Babajaga wiedzma                   |
++------------------------------------+
+13 rows in set (0.00 sec)
+
+mysql> select (ilosc*waga) AS 'waga calkowita' from zasob where year(dataPozyskania) IN (2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007);
++----------------+
+| waga calkowita |
++----------------+
+|           6.00 |
+|           4.00 |
+|          30.00 |
+|         100.00 |
+|          30.00 |
+|          24.00 |
+|          24.00 |
+|           6.00 |
+|          12.00 |
+|         100.00 |
+|           9.00 |
+|           3.00 |
+|          20.00 |
+|           3.00 |
+|           2.00 |
+|           4.00 |
+|           4.00 |
+|           3.00 |
++----------------+
+18 rows in set (0.00 sec)
+
+mysql> select (ilosc*waga) AS 'waga calkowita', dataPozyskania from zasob where
+year(dataPozyskania) IN (2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007);
++----------------+----------------+
+| waga calkowita | dataPozyskania |
++----------------+----------------+
+|           6.00 | 2007-07-23     |
+|           4.00 | 2004-09-03     |
+|          30.00 | 2001-12-14     |
+|         100.00 | 2005-07-14     |
+|          30.00 | 2002-07-01     |
+|          24.00 | 2006-08-01     |
+|          24.00 | 2004-06-01     |
+|           6.00 | 2004-06-15     |
+|          12.00 | 2004-07-15     |
+|         100.00 | 2001-03-25     |
+|           9.00 | 2003-01-25     |
+|           3.00 | 2000-01-25     |
+|          20.00 | 2001-03-21     |
+|           3.00 | 2003-04-17     |
+|           2.00 | 2001-01-17     |
+|           4.00 | 2001-08-10     |
+|           4.00 | 2002-08-10     |
+|           3.00 | 2005-10-10     |
++----------------+----------------+
+18 rows in set (0.00 sec)
+
+mysql> select (waga*0.7) AS 'masa prawidlowa jedzenia', (waga*0.3) AS 'waga odpadow', rodzaj from zasob where rodzaj='jedzenie';
++--------------------------+--------------+----------+
+| masa prawidlowa jedzenia | waga odpadow | rodzaj   |
++--------------------------+--------------+----------+
+|                     1.40 |         0.60 | jedzenie |
+|                     2.80 |         1.20 | jedzenie |
+|                     4.90 |         2.10 | jedzenie |
+|                     1.40 |         0.60 | jedzenie |
+|                     0.70 |         0.30 | jedzenie |
+|                    70.00 |        30.00 | jedzenie |
+|                     0.70 |         0.30 | jedzenie |
+|                     8.40 |         3.60 | jedzenie |
+|                     0.70 |         0.30 | jedzenie |
++--------------------------+--------------+----------+
+9 rows in set (0.00 sec)
+
+mysql> select *from zasob where rodzaj IS NULL;
++----------+-----------------+------+-------+----------------+--------+
+| idZasobu | nazwa           | waga | ilosc | dataPozyskania | rodzaj |
++----------+-----------------+------+-------+----------------+--------+
+|       10 | stanik          | 0.20 |   120 | 2004-06-01     | NULL   |
+|       11 | stanik          | 0.30 |    20 | 2004-06-15     | NULL   |
+|       12 | stanik          | 0.40 |    30 | 2004-07-15     | NULL   |
+|       13 | stanik          | 0.20 |    40 | 2012-08-15     | NULL   |
+|       25 | nie wiadomo co  | 4.00 |     1 | 2001-08-10     | NULL   |
+|       26 | ogien do ziania | 1.00 |     4 | 2002-08-10     | NULL   |
+|       27 | miotla          | 3.00 |     1 | 2005-10-10     | NULL   |
++----------+-----------------+------+-------+----------------+--------+
+7 rows in set (0.00 sec)
+mysql> select distinct rodzaj, nazwa from zasob where nazwa LIKE 'Ba%' OR nazw
+LIKE '%os' ORDER BY nazwa;
++----------+--------+
+| rodzaj   | nazwa  |
++----------+--------+
+| jedzenie | banan  |
+| jedzenie | bataty |
+| jedzenie | kokos  |
+| jedzenie | opos   |
++----------+--------+
+4 rows in set (0.00 sec)
+
